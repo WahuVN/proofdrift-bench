@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "benchmark_version": "3",
+  "focus": "drift",
+  "thresholds": {
+    "max_fpr": 0.05,
+    "max_fnr": 0.05,
+    "min_pair_accuracy": 0.9,
+    "max_pair_baseline_fpr": 0.05,
+    "max_pair_fnr": 0.05
+  },
+  "rationale": {
+    "max_fpr": "Hard negatives should not trigger more than five percent false positives.",
+    "max_fnr": "Hard positives should not miss more than five percent true drift.",
+    "min_pair_accuracy": "At least ninety percent of minimal pairs must move in the correct safe-to-risky direction.",
+    "max_pair_baseline_fpr": "Minimal safe baselines must remain below five percent false positives.",
+    "max_pair_fnr": "Mutated pair sides must remain below five percent false negatives."
+  }
+}

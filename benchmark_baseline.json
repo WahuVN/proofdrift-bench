@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "benchmark_version": "3",
+  "focus": "drift",
+  "target_set_digest": "f2bba246a24811e61549019d9daacfdad62180334b6ac4a3977c0fc0787c657f",
+  "targets": 66,
+  "positive_targets": 24,
+  "negative_targets": 42,
+  "drift_pairs": 24,
+  "hard_controls": 18,
+  "oracle_harness_baseline": {
+    "fpr": 0.0,
+    "fnr": 0.0,
+    "pair_accuracy": 1.0,
+    "pair_baseline_fpr": 0.0,
+    "pair_fnr": 0.0
+  },
+  "note": "This is a benchmark-harness and corpus-integrity baseline, not a detector-performance claim. Real detector predictions must be scored independently against benchmark_thresholds.json."
+}

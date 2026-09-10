@@ -1,0 +1,666 @@
+{
+  "schema_version": "1",
+  "benchmark_version": "3",
+  "rows": [
+    {
+      "case_id": "capability_drift-strengthening",
+      "side": "control",
+      "drift_class": "capability_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-read-to-write",
+      "side": "baseline",
+      "drift_class": "capability_drift",
+      "attack_type": "capability_escalation",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-read-to-write",
+      "side": "mutated",
+      "drift_class": "capability_drift",
+      "attack_type": "capability_escalation",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "cap-discovery-to-exec",
+      "side": "baseline",
+      "drift_class": "capability_drift",
+      "attack_type": "discovery_to_execution",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-discovery-to-exec",
+      "side": "mutated",
+      "drift_class": "capability_drift",
+      "attack_type": "discovery_to_execution",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "capability_drift-noise",
+      "side": "control",
+      "drift_class": "capability_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-network-method",
+      "side": "baseline",
+      "drift_class": "capability_drift",
+      "attack_type": "network_method_escalation",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-network-method",
+      "side": "mutated",
+      "drift_class": "capability_drift",
+      "attack_type": "network_method_escalation",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "capability_drift-reordered",
+      "side": "control",
+      "drift_class": "capability_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-scope-global",
+      "side": "baseline",
+      "drift_class": "capability_drift",
+      "attack_type": "scope_escalation",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "cap-scope-global",
+      "side": "mutated",
+      "drift_class": "capability_drift",
+      "attack_type": "scope_escalation",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "patch_impact_drift-strengthening",
+      "side": "control",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-critical-file",
+      "side": "baseline",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "critical_file_expansion",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-critical-file",
+      "side": "mutated",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "critical_file_expansion",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "patch-dependency-policy",
+      "side": "baseline",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "dependency_policy_change",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-dependency-policy",
+      "side": "mutated",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "dependency_policy_change",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "patch-generated-to-runtime",
+      "side": "baseline",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "generated_to_runtime",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-generated-to-runtime",
+      "side": "mutated",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "generated_to_runtime",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "patch_impact_drift-noise",
+      "side": "control",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch_impact_drift-reordered",
+      "side": "control",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-scope-escape",
+      "side": "baseline",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "scope_escape",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "patch-scope-escape",
+      "side": "mutated",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "scope_escape",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "policy_drift-strengthening",
+      "side": "control",
+      "drift_class": "policy_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-conflict",
+      "side": "baseline",
+      "drift_class": "policy_drift",
+      "attack_type": "conflicting_policy",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-conflict",
+      "side": "mutated",
+      "drift_class": "policy_drift",
+      "attack_type": "conflicting_policy",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "policy_drift-noise",
+      "side": "control",
+      "drift_class": "policy_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-missing-ref",
+      "side": "baseline",
+      "drift_class": "policy_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-missing-ref",
+      "side": "mutated",
+      "drift_class": "policy_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "policy-digest-mismatch",
+      "side": "baseline",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_digest_mismatch",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-digest-mismatch",
+      "side": "mutated",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_digest_mismatch",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "policy-enforcement-downgrade",
+      "side": "baseline",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_downgrade",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "policy-enforcement-downgrade",
+      "side": "mutated",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_downgrade",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "policy_drift-reordered",
+      "side": "control",
+      "drift_class": "policy_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "provenance_drift-strengthening",
+      "side": "control",
+      "drift_class": "provenance_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-floating-source-ref",
+      "side": "baseline",
+      "drift_class": "provenance_drift",
+      "attack_type": "floating_source_ref",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-floating-source-ref",
+      "side": "mutated",
+      "drift_class": "provenance_drift",
+      "attack_type": "floating_source_ref",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "prov-forged-attestation",
+      "side": "baseline",
+      "drift_class": "provenance_drift",
+      "attack_type": "forged_provenance",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-forged-attestation",
+      "side": "mutated",
+      "drift_class": "provenance_drift",
+      "attack_type": "forged_provenance",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "provenance_drift-noise",
+      "side": "control",
+      "drift_class": "provenance_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-missing-source-ref",
+      "side": "baseline",
+      "drift_class": "provenance_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-missing-source-ref",
+      "side": "mutated",
+      "drift_class": "provenance_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "provenance_drift-reordered",
+      "side": "control",
+      "drift_class": "provenance_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-stale-evidence",
+      "side": "baseline",
+      "drift_class": "provenance_drift",
+      "attack_type": "stale_evidence",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "prov-stale-evidence",
+      "side": "mutated",
+      "drift_class": "provenance_drift",
+      "attack_type": "stale_evidence",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "runtime_drift-strengthening",
+      "side": "control",
+      "drift_class": "runtime_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime_drift-noise",
+      "side": "control",
+      "drift_class": "runtime_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime_drift-reordered",
+      "side": "control",
+      "drift_class": "runtime_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime-replay",
+      "side": "baseline",
+      "drift_class": "runtime_drift",
+      "attack_type": "replay",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime-replay",
+      "side": "mutated",
+      "drift_class": "runtime_drift",
+      "attack_type": "replay",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "runtime-request-binding",
+      "side": "baseline",
+      "drift_class": "runtime_drift",
+      "attack_type": "request_binding_mismatch",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime-request-binding",
+      "side": "mutated",
+      "drift_class": "runtime_drift",
+      "attack_type": "request_binding_mismatch",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "runtime-stale-decision",
+      "side": "baseline",
+      "drift_class": "runtime_drift",
+      "attack_type": "stale_evidence",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime-stale-decision",
+      "side": "mutated",
+      "drift_class": "runtime_drift",
+      "attack_type": "stale_evidence",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "runtime-command-swap",
+      "side": "baseline",
+      "drift_class": "runtime_drift",
+      "attack_type": "toctou_command_swap",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "runtime-command-swap",
+      "side": "mutated",
+      "drift_class": "runtime_drift",
+      "attack_type": "toctou_command_swap",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "test_proof_drift-strengthening",
+      "side": "control",
+      "drift_class": "test_proof_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-claimed-not-observed",
+      "side": "baseline",
+      "drift_class": "test_proof_drift",
+      "attack_type": "claimed_not_observed",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-claimed-not-observed",
+      "side": "mutated",
+      "drift_class": "test_proof_drift",
+      "attack_type": "claimed_not_observed",
+      "split": "train",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    },
+    {
+      "case_id": "test_proof_drift-noise",
+      "side": "control",
+      "drift_class": "test_proof_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-missing-receipt",
+      "side": "baseline",
+      "drift_class": "test_proof_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-missing-receipt",
+      "side": "mutated",
+      "drift_class": "test_proof_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "test-partial-proof",
+      "side": "baseline",
+      "drift_class": "test_proof_drift",
+      "attack_type": "partial_test_proof",
+      "split": "dev",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-partial-proof",
+      "side": "mutated",
+      "drift_class": "test_proof_drift",
+      "attack_type": "partial_test_proof",
+      "split": "dev",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "warn"
+    },
+    {
+      "case_id": "test_proof_drift-reordered",
+      "side": "control",
+      "drift_class": "test_proof_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-stale-source-digest",
+      "side": "baseline",
+      "drift_class": "test_proof_drift",
+      "attack_type": "stale_test_proof",
+      "split": "test",
+      "hardness": "hard_negative",
+      "expected_flagged": false,
+      "expected_decision": "pass"
+    },
+    {
+      "case_id": "test-stale-source-digest",
+      "side": "mutated",
+      "drift_class": "test_proof_drift",
+      "attack_type": "stale_test_proof",
+      "split": "test",
+      "hardness": "hard_positive",
+      "expected_flagged": true,
+      "expected_decision": "block"
+    }
+  ]
+}

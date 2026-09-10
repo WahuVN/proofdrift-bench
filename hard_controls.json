@@ -1,0 +1,538 @@
+{
+  "schema_version": "1",
+  "benchmark_version": "3",
+  "deterministic_seed": 20260911,
+  "controls": [
+    {
+      "id": "policy_drift-strengthening",
+      "drift_class": "policy_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "policy": {
+          "decision_digest": "aaaaaaaa",
+          "dispatch_digest": "aaaaaaaa",
+          "required_decision": "deny",
+          "effective_decision": "deny",
+          "required_enforcement": "strict",
+          "effective_enforcement": "strict",
+          "policy_ref": "sha256:policy"
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. Policy binding, decision, enforcement, and reference are mutually consistent."
+      }
+    },
+    {
+      "id": "patch_impact_drift-strengthening",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "patch": {
+          "changed_files": [
+            "docs/guide.md"
+          ],
+          "allowed_scope": "docs/**",
+          "changed_path": "docs/guide.md",
+          "dependency_change": {
+            "name": "serde",
+            "allowed": true
+          },
+          "artifact_kind": "generated"
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. The patch stays inside declared low-risk scope with allowlisted dependencies."
+      }
+    },
+    {
+      "id": "policy_drift-reordered",
+      "drift_class": "policy_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "policy": {
+          "policy_ref": "sha256:policy",
+          "effective_enforcement": "strict",
+          "required_enforcement": "strict",
+          "effective_decision": "deny",
+          "required_decision": "deny",
+          "dispatch_digest": "aaaaaaaa",
+          "decision_digest": "aaaaaaaa"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. Policy binding, decision, enforcement, and reference are mutually consistent."
+      }
+    },
+    {
+      "id": "provenance_drift-noise",
+      "drift_class": "provenance_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "provenance": {
+          "revision": "0123456789abcdef0123456789abcdef01234567",
+          "source_ref": "sha256:aaaa",
+          "attestation": {
+            "signature_valid": true,
+            "issuer": "trusted-build"
+          },
+          "evidence_age_seconds": 30,
+          "max_age_seconds": 3600
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. The provenance remains immutable, trusted, referenced, and fresh."
+      }
+    },
+    {
+      "id": "provenance_drift-reordered",
+      "drift_class": "provenance_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "provenance": {
+          "max_age_seconds": 3600,
+          "evidence_age_seconds": 30,
+          "attestation": {
+            "signature_valid": true,
+            "issuer": "trusted-build"
+          },
+          "source_ref": "sha256:aaaa",
+          "revision": "0123456789abcdef0123456789abcdef01234567"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. The provenance remains immutable, trusted, referenced, and fresh."
+      }
+    },
+    {
+      "id": "test_proof_drift-strengthening",
+      "drift_class": "test_proof_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "test_proof": {
+          "command": "cargo test",
+          "observed": true,
+          "required": 100,
+          "passed": 100,
+          "source_digest": "aaaaaaaa",
+          "proof_digest": "aaaaaaaa",
+          "execution_receipt": "exec:1234"
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. The complete test proof is observed, current, and bound to an execution receipt."
+      }
+    },
+    {
+      "id": "test_proof_drift-reordered",
+      "drift_class": "test_proof_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "test_proof": {
+          "execution_receipt": "exec:1234",
+          "proof_digest": "aaaaaaaa",
+          "source_digest": "aaaaaaaa",
+          "passed": 100,
+          "required": 100,
+          "observed": true,
+          "command": "cargo test"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. The complete test proof is observed, current, and bound to an execution receipt."
+      }
+    },
+    {
+      "id": "provenance_drift-strengthening",
+      "drift_class": "provenance_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "provenance": {
+          "revision": "0123456789abcdef0123456789abcdef01234567",
+          "source_ref": "sha256:aaaa",
+          "attestation": {
+            "signature_valid": true,
+            "issuer": "trusted-build"
+          },
+          "evidence_age_seconds": 30,
+          "max_age_seconds": 3600
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. The provenance remains immutable, trusted, referenced, and fresh."
+      }
+    },
+    {
+      "id": "runtime_drift-reordered",
+      "drift_class": "runtime_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "runtime": {
+          "dispatch_argv": [
+            "git",
+            "status"
+          ],
+          "approved_argv": [
+            "git",
+            "status"
+          ],
+          "ttl_seconds": 300,
+          "decision_age_seconds": 5,
+          "current_sequence": 11,
+          "previous_sequence": 10,
+          "dispatch_request_digest": "aaaaaaaa",
+          "decision_request_digest": "aaaaaaaa"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. The runtime request is fresh, monotonic, and identical to the approved command."
+      }
+    },
+    {
+      "id": "policy_drift-noise",
+      "drift_class": "policy_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "policy": {
+          "decision_digest": "aaaaaaaa",
+          "dispatch_digest": "aaaaaaaa",
+          "required_decision": "deny",
+          "effective_decision": "deny",
+          "required_enforcement": "strict",
+          "effective_enforcement": "strict",
+          "policy_ref": "sha256:policy"
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. Policy binding, decision, enforcement, and reference are mutually consistent."
+      }
+    },
+    {
+      "id": "test_proof_drift-noise",
+      "drift_class": "test_proof_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "test_proof": {
+          "command": "cargo test",
+          "observed": true,
+          "required": 100,
+          "passed": 100,
+          "source_digest": "aaaaaaaa",
+          "proof_digest": "aaaaaaaa",
+          "execution_receipt": "exec:1234"
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. The complete test proof is observed, current, and bound to an execution receipt."
+      }
+    },
+    {
+      "id": "runtime_drift-noise",
+      "drift_class": "runtime_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "runtime": {
+          "decision_request_digest": "aaaaaaaa",
+          "dispatch_request_digest": "aaaaaaaa",
+          "previous_sequence": 10,
+          "current_sequence": 11,
+          "decision_age_seconds": 5,
+          "ttl_seconds": 300,
+          "approved_argv": [
+            "git",
+            "status"
+          ],
+          "dispatch_argv": [
+            "git",
+            "status"
+          ]
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. The runtime request is fresh, monotonic, and identical to the approved command."
+      }
+    },
+    {
+      "id": "patch_impact_drift-noise",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "patch": {
+          "changed_files": [
+            "docs/guide.md"
+          ],
+          "allowed_scope": "docs/**",
+          "changed_path": "docs/guide.md",
+          "dependency_change": {
+            "name": "serde",
+            "allowed": true
+          },
+          "artifact_kind": "generated"
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. The patch stays inside declared low-risk scope with allowlisted dependencies."
+      }
+    },
+    {
+      "id": "runtime_drift-strengthening",
+      "drift_class": "runtime_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "runtime": {
+          "decision_request_digest": "aaaaaaaa",
+          "dispatch_request_digest": "aaaaaaaa",
+          "previous_sequence": 10,
+          "current_sequence": 11,
+          "decision_age_seconds": 5,
+          "ttl_seconds": 300,
+          "approved_argv": [
+            "git",
+            "status"
+          ],
+          "dispatch_argv": [
+            "git",
+            "status"
+          ]
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. The runtime request is fresh, monotonic, and identical to the approved command."
+      }
+    },
+    {
+      "id": "capability_drift-reordered",
+      "drift_class": "capability_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "workspace/src/**"
+        },
+        "discovery": {
+          "execution_allowed": false
+        },
+        "network_capability": {
+          "method": "GET",
+          "host": "api.example.invalid"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. Read-only bounded capabilities remain unchanged and do not imply execution."
+      }
+    },
+    {
+      "id": "patch_impact_drift-reordered",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "reordered_fields",
+      "split": "train",
+      "description": "Equivalent safe input with fields deliberately reordered.",
+      "input": {
+        "patch": {
+          "artifact_kind": "generated",
+          "dependency_change": {
+            "name": "serde",
+            "allowed": true
+          },
+          "changed_path": "docs/guide.md",
+          "allowed_scope": "docs/**",
+          "changed_files": [
+            "docs/guide.md"
+          ]
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Field order is non-semantic. The patch stays inside declared low-risk scope with allowlisted dependencies."
+      }
+    },
+    {
+      "id": "capability_drift-strengthening",
+      "drift_class": "capability_drift",
+      "attack_type": "benign_strengthening",
+      "split": "test",
+      "description": "Equivalent safe input with an additional assurance-only field.",
+      "input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "workspace/src/**"
+        },
+        "discovery": {
+          "execution_allowed": false
+        },
+        "network_capability": {
+          "method": "GET",
+          "host": "api.example.invalid"
+        },
+        "assurance": {
+          "additional_validation": true
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Additional assurance is a hard negative, not a security regression. Read-only bounded capabilities remain unchanged and do not imply execution."
+      }
+    },
+    {
+      "id": "capability_drift-noise",
+      "drift_class": "capability_drift",
+      "attack_type": "irrelevant_noise",
+      "split": "dev",
+      "description": "Equivalent safe input with irrelevant metadata noise.",
+      "input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "workspace/src/**"
+        },
+        "discovery": {
+          "execution_allowed": false
+        },
+        "network_capability": {
+          "method": "GET",
+          "host": "api.example.invalid"
+        },
+        "metadata": {
+          "note": "irrelevant-noise",
+          "trace_label": "synthetic-control"
+        }
+      },
+      "expected": {
+        "flagged": false,
+        "findings": [],
+        "decisions": [],
+        "minimum_evidence": [],
+        "ground_truth_reason": "Unrelated metadata must not create drift. Read-only bounded capabilities remain unchanged and do not imply execution."
+      }
+    }
+  ]
+}

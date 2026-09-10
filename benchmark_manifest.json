@@ -1,0 +1,60 @@
+{
+  "schema_version": "1",
+  "benchmark": "proofdrift_detector_quality",
+  "benchmark_version": "3",
+  "deterministic_seed": 20260911,
+  "drift_classes": [
+    "provenance_drift",
+    "capability_drift",
+    "policy_drift",
+    "runtime_drift",
+    "patch_impact_drift",
+    "test_proof_drift"
+  ],
+  "splits": [
+    "train",
+    "dev",
+    "test"
+  ],
+  "suite_files": {
+    "legacy_corpus": "corpus/*.json",
+    "drift_pairs": "drift_pairs.json",
+    "hard_controls": "hard_controls.json",
+    "coverage_matrix": "coverage_matrix.json"
+  },
+  "counts": {
+    "legacy_corpus": 160,
+    "drift_pairs": 24,
+    "pair_targets": 48,
+    "hard_controls": 18,
+    "drift_science_targets": 66
+  },
+  "pair_counts_by_class": {
+    "capability_drift": 4,
+    "patch_impact_drift": 4,
+    "policy_drift": 4,
+    "provenance_drift": 4,
+    "runtime_drift": 4,
+    "test_proof_drift": 4
+  },
+  "control_counts_by_class": {
+    "capability_drift": 3,
+    "patch_impact_drift": 3,
+    "policy_drift": 3,
+    "provenance_drift": 3,
+    "runtime_drift": 3,
+    "test_proof_drift": 3
+  },
+  "pair_counts_by_split": {
+    "dev": 6,
+    "test": 12,
+    "train": 6
+  },
+  "control_counts_by_split": {
+    "dev": 6,
+    "test": 6,
+    "train": 6
+  },
+  "legacy_corpus_digest": "d78fae44060ddfb4a95f9f5a141ba0aeaa3fadfbb4a4cdd98fc0209450fc72e6",
+  "drift_suite_digest": "5d9546c8f74c9a7a72fde6da80b2ec1324d6a6022b9be0169f404666b1f6726b"
+}

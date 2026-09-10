@@ -1,0 +1,879 @@
+{
+  "schema_version": "2",
+  "benchmark_version": "3",
+  "deterministic_seed": 20260911,
+  "drift_classes": [
+    "provenance_drift",
+    "capability_drift",
+    "policy_drift",
+    "runtime_drift",
+    "patch_impact_drift",
+    "test_proof_drift"
+  ],
+  "pairs": [
+    {
+      "id": "runtime-replay",
+      "drift_class": "runtime_drift",
+      "attack_type": "replay",
+      "split": "dev",
+      "description": "A monotonic execution sequence is replaced by a previously consumed sequence.",
+      "baseline_input": {
+        "runtime": {
+          "previous_sequence": 10,
+          "current_sequence": 11
+        }
+      },
+      "mutated_input": {
+        "runtime": {
+          "previous_sequence": 10,
+          "current_sequence": 10
+        }
+      },
+      "changed_paths": [
+        "/runtime/current_sequence"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:RUNTIME_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "sequence",
+          "consumption_record"
+        ],
+        "ground_truth_reason": "A non-increasing sequence indicates replay or rollback of an already observed request."
+      }
+    },
+    {
+      "id": "patch-critical-file",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "critical_file_expansion",
+      "split": "train",
+      "description": "A documentation-only patch expands to authentication runtime code.",
+      "baseline_input": {
+        "patch": {
+          "changed_files": [
+            "docs/guide.md"
+          ]
+        }
+      },
+      "mutated_input": {
+        "patch": {
+          "changed_files": [
+            "docs/guide.md",
+            "src/auth.rs"
+          ]
+        }
+      },
+      "changed_paths": [
+        "/patch/changed_files"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:PATCH_IMPACT_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "patch_before",
+          "patch_after"
+        ],
+        "ground_truth_reason": "Adding authentication code materially increases patch impact and requires stronger proof."
+      }
+    },
+    {
+      "id": "policy-enforcement-downgrade",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_downgrade",
+      "split": "test",
+      "description": "Strict enforcement silently degrades to advisory mode.",
+      "baseline_input": {
+        "policy": {
+          "required_enforcement": "strict",
+          "effective_enforcement": "strict"
+        }
+      },
+      "mutated_input": {
+        "policy": {
+          "required_enforcement": "strict",
+          "effective_enforcement": "advisory"
+        }
+      },
+      "changed_paths": [
+        "/policy/effective_enforcement"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:POLICY_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "required_policy",
+          "effective_policy"
+        ],
+        "ground_truth_reason": "Advisory enforcement is weaker than the required strict mode."
+      }
+    },
+    {
+      "id": "cap-network-method",
+      "drift_class": "capability_drift",
+      "attack_type": "network_method_escalation",
+      "split": "test",
+      "description": "A read-only network request becomes state-changing while destination remains fixed.",
+      "baseline_input": {
+        "network_capability": {
+          "method": "GET",
+          "host": "api.example.invalid"
+        }
+      },
+      "mutated_input": {
+        "network_capability": {
+          "method": "POST",
+          "host": "api.example.invalid"
+        }
+      },
+      "changed_paths": [
+        "/network_capability/method"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:CAPABILITY_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "capability_before",
+          "capability_after"
+        ],
+        "ground_truth_reason": "Changing GET to POST adds state-changing authority without changing the host."
+      }
+    },
+    {
+      "id": "policy-digest-mismatch",
+      "drift_class": "policy_drift",
+      "attack_type": "policy_digest_mismatch",
+      "split": "train",
+      "description": "The policy digest bound to a decision no longer matches dispatch.",
+      "baseline_input": {
+        "policy": {
+          "decision_digest": "aaaaaaaa",
+          "dispatch_digest": "aaaaaaaa"
+        }
+      },
+      "mutated_input": {
+        "policy": {
+          "decision_digest": "aaaaaaaa",
+          "dispatch_digest": "bbbbbbbb"
+        }
+      },
+      "changed_paths": [
+        "/policy/dispatch_digest"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:POLICY_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "policy_digest",
+          "decision_hash"
+        ],
+        "ground_truth_reason": "Dispatch must be governed by the same policy version that produced the decision."
+      }
+    },
+    {
+      "id": "cap-discovery-to-exec",
+      "drift_class": "capability_drift",
+      "attack_type": "discovery_to_execution",
+      "split": "test",
+      "description": "Passive discovery gains direct execution permission.",
+      "baseline_input": {
+        "discovery": {
+          "mode": "metadata",
+          "execution_allowed": false
+        }
+      },
+      "mutated_input": {
+        "discovery": {
+          "mode": "metadata",
+          "execution_allowed": true
+        }
+      },
+      "changed_paths": [
+        "/discovery/execution_allowed"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:CAPABILITY_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "capability_before",
+          "capability_after"
+        ],
+        "ground_truth_reason": "Execution is a material new capability and must not be inferred from discovery access."
+      }
+    },
+    {
+      "id": "prov-missing-source-ref",
+      "drift_class": "provenance_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "description": "A resolved provenance record loses the reference that binds it to its source.",
+      "baseline_input": {
+        "provenance": {
+          "source_ref": "sha256:aaaaaaaa",
+          "resolved_revision": "0123456789abcdef0123456789abcdef01234567"
+        }
+      },
+      "mutated_input": {
+        "provenance": {
+          "source_ref": "",
+          "resolved_revision": "0123456789abcdef0123456789abcdef01234567"
+        }
+      },
+      "changed_paths": [
+        "/provenance/source_ref"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:PROVENANCE_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "source_ref",
+          "resolved_revision"
+        ],
+        "ground_truth_reason": "Missing source binding prevents the revision from being traced to verifiable provenance."
+      }
+    },
+    {
+      "id": "test-partial-proof",
+      "drift_class": "test_proof_drift",
+      "attack_type": "partial_test_proof",
+      "split": "dev",
+      "description": "Complete required test execution becomes only a partial subset.",
+      "baseline_input": {
+        "test_proof": {
+          "required": 100,
+          "passed": 100
+        }
+      },
+      "mutated_input": {
+        "test_proof": {
+          "required": 100,
+          "passed": 60
+        }
+      },
+      "changed_paths": [
+        "/test_proof/passed"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:TEST_PROOF_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "required_tests",
+          "observed_tests"
+        ],
+        "ground_truth_reason": "Only part of the required test set is proven to have passed."
+      }
+    },
+    {
+      "id": "cap-read-to-write",
+      "drift_class": "capability_drift",
+      "attack_type": "capability_escalation",
+      "split": "train",
+      "description": "A workspace read capability expands to write while resource scope stays fixed.",
+      "baseline_input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "workspace/**"
+        }
+      },
+      "mutated_input": {
+        "capability": {
+          "action": "fs.write",
+          "resource": "workspace/**"
+        }
+      },
+      "changed_paths": [
+        "/capability/action"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:CAPABILITY_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "capability_before",
+          "capability_after"
+        ],
+        "ground_truth_reason": "The action changes from read to write with no compensating scope restriction."
+      }
+    },
+    {
+      "id": "prov-floating-source-ref",
+      "drift_class": "provenance_drift",
+      "attack_type": "floating_source_ref",
+      "split": "train",
+      "description": "An immutable source revision becomes a floating branch reference.",
+      "baseline_input": {
+        "provenance": {
+          "source": "https://example.invalid/tool.git",
+          "revision": "0123456789abcdef0123456789abcdef01234567"
+        }
+      },
+      "mutated_input": {
+        "provenance": {
+          "source": "https://example.invalid/tool.git",
+          "revision": "main"
+        }
+      },
+      "changed_paths": [
+        "/provenance/revision"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:PROVENANCE_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "source_ref",
+          "resolved_revision"
+        ],
+        "ground_truth_reason": "Only the revision mutates; immutable-to-floating provenance must be detected."
+      }
+    },
+    {
+      "id": "cap-scope-global",
+      "drift_class": "capability_drift",
+      "attack_type": "scope_escalation",
+      "split": "dev",
+      "description": "A bounded read scope expands to a global resource selector.",
+      "baseline_input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "workspace/src/**"
+        }
+      },
+      "mutated_input": {
+        "capability": {
+          "action": "fs.read",
+          "resource": "**"
+        }
+      },
+      "changed_paths": [
+        "/capability/resource"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:CAPABILITY_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "capability_before",
+          "capability_after"
+        ],
+        "ground_truth_reason": "The capability verb is unchanged but the resource set becomes globally broader."
+      }
+    },
+    {
+      "id": "prov-forged-attestation",
+      "drift_class": "provenance_drift",
+      "attack_type": "forged_provenance",
+      "split": "test",
+      "description": "A trusted provenance issuer is replaced with a self-asserted issuer.",
+      "baseline_input": {
+        "provenance": {
+          "attestation": {
+            "issuer": "trusted-build",
+            "signature_valid": true
+          }
+        }
+      },
+      "mutated_input": {
+        "provenance": {
+          "attestation": {
+            "issuer": "self-asserted",
+            "signature_valid": true
+          }
+        }
+      },
+      "changed_paths": [
+        "/provenance/attestation/issuer"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:PROVENANCE_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "attestation_issuer",
+          "signature_verification"
+        ],
+        "ground_truth_reason": "A syntactically valid signature is insufficient when the provenance issuer is not trusted."
+      }
+    },
+    {
+      "id": "policy-conflict",
+      "drift_class": "policy_drift",
+      "attack_type": "conflicting_policy",
+      "split": "dev",
+      "description": "A required deny is overridden by an effective allow.",
+      "baseline_input": {
+        "policy": {
+          "required_decision": "deny",
+          "effective_decision": "deny"
+        }
+      },
+      "mutated_input": {
+        "policy": {
+          "required_decision": "deny",
+          "effective_decision": "allow"
+        }
+      },
+      "changed_paths": [
+        "/policy/effective_decision"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:POLICY_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "required_policy",
+          "effective_policy"
+        ],
+        "ground_truth_reason": "The effective policy conflicts with the required deny and would weaken enforcement."
+      }
+    },
+    {
+      "id": "prov-stale-evidence",
+      "drift_class": "provenance_drift",
+      "attack_type": "stale_evidence",
+      "split": "dev",
+      "description": "Fresh provenance evidence becomes older than its declared maximum age.",
+      "baseline_input": {
+        "provenance": {
+          "evidence_age_seconds": 120,
+          "max_age_seconds": 3600
+        }
+      },
+      "mutated_input": {
+        "provenance": {
+          "evidence_age_seconds": 7200,
+          "max_age_seconds": 3600
+        }
+      },
+      "changed_paths": [
+        "/provenance/evidence_age_seconds"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:PROVENANCE_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "evidence_timestamp",
+          "max_age"
+        ],
+        "ground_truth_reason": "The evidence exceeds the explicit freshness bound while all other context is fixed."
+      }
+    },
+    {
+      "id": "test-missing-receipt",
+      "drift_class": "test_proof_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "description": "An observed test loses its execution receipt reference.",
+      "baseline_input": {
+        "test_proof": {
+          "observed": true,
+          "execution_receipt": "exec:1234"
+        }
+      },
+      "mutated_input": {
+        "test_proof": {
+          "observed": true,
+          "execution_receipt": ""
+        }
+      },
+      "changed_paths": [
+        "/test_proof/execution_receipt"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:TEST_PROOF_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "test_command",
+          "execution_receipt"
+        ],
+        "ground_truth_reason": "Without a receipt, the claimed observation cannot be traced to an execution record."
+      }
+    },
+    {
+      "id": "test-stale-source-digest",
+      "drift_class": "test_proof_drift",
+      "attack_type": "stale_test_proof",
+      "split": "test",
+      "description": "The tested source digest no longer matches the current source digest.",
+      "baseline_input": {
+        "test_proof": {
+          "source_digest": "aaaaaaaa",
+          "proof_digest": "aaaaaaaa"
+        }
+      },
+      "mutated_input": {
+        "test_proof": {
+          "source_digest": "aaaaaaaa",
+          "proof_digest": "bbbbbbbb"
+        }
+      },
+      "changed_paths": [
+        "/test_proof/proof_digest"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:TEST_PROOF_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "source_digest",
+          "proof_digest"
+        ],
+        "ground_truth_reason": "Test proof for a different source revision cannot establish the current patch result."
+      }
+    },
+    {
+      "id": "runtime-stale-decision",
+      "drift_class": "runtime_drift",
+      "attack_type": "stale_evidence",
+      "split": "test",
+      "description": "A fresh runtime decision ages beyond its time-to-live before dispatch.",
+      "baseline_input": {
+        "runtime": {
+          "decision_age_seconds": 10,
+          "ttl_seconds": 300
+        }
+      },
+      "mutated_input": {
+        "runtime": {
+          "decision_age_seconds": 301,
+          "ttl_seconds": 300
+        }
+      },
+      "changed_paths": [
+        "/runtime/decision_age_seconds"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:RUNTIME_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "decision_timestamp",
+          "dispatch_timestamp"
+        ],
+        "ground_truth_reason": "The decision is stale at dispatch and may no longer reflect current runtime state."
+      }
+    },
+    {
+      "id": "patch-scope-escape",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "scope_escape",
+      "split": "dev",
+      "description": "A patch that was inside its declared scope now modifies an out-of-scope production file.",
+      "baseline_input": {
+        "patch": {
+          "allowed_scope": "src/**",
+          "changed_path": "src/lib.rs"
+        }
+      },
+      "mutated_input": {
+        "patch": {
+          "allowed_scope": "src/**",
+          "changed_path": "infra/prod.tf"
+        }
+      },
+      "changed_paths": [
+        "/patch/changed_path"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:PATCH_IMPACT_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "declared_scope",
+          "changed_paths"
+        ],
+        "ground_truth_reason": "The changed path no longer falls under the scope that was evaluated."
+      }
+    },
+    {
+      "id": "runtime-command-swap",
+      "drift_class": "runtime_drift",
+      "attack_type": "toctou_command_swap",
+      "split": "test",
+      "description": "The command approved by policy is swapped before dispatch.",
+      "baseline_input": {
+        "runtime": {
+          "approved_argv": [
+            "git",
+            "status"
+          ],
+          "dispatch_argv": [
+            "git",
+            "status"
+          ]
+        }
+      },
+      "mutated_input": {
+        "runtime": {
+          "approved_argv": [
+            "git",
+            "status"
+          ],
+          "dispatch_argv": [
+            "git",
+            "reset",
+            "--hard"
+          ]
+        }
+      },
+      "changed_paths": [
+        "/runtime/dispatch_argv"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:RUNTIME_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "approved_argv",
+          "dispatch_argv"
+        ],
+        "ground_truth_reason": "A time-of-check/time-of-use command swap changes the executed operation after approval."
+      }
+    },
+    {
+      "id": "patch-generated-to-runtime",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "generated_to_runtime",
+      "split": "test",
+      "description": "A generated artifact is replaced by runtime source under the same review context.",
+      "baseline_input": {
+        "patch": {
+          "artifact_kind": "generated",
+          "path": "generated/schema.json"
+        }
+      },
+      "mutated_input": {
+        "patch": {
+          "artifact_kind": "runtime_source",
+          "path": "generated/schema.json"
+        }
+      },
+      "changed_paths": [
+        "/patch/artifact_kind"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:PATCH_IMPACT_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "patch_before",
+          "patch_after"
+        ],
+        "ground_truth_reason": "Runtime source carries a different execution risk than generated data."
+      }
+    },
+    {
+      "id": "patch-dependency-policy",
+      "drift_class": "patch_impact_drift",
+      "attack_type": "dependency_policy_change",
+      "split": "test",
+      "description": "A dependency update moves from allowlisted to non-allowlisted provenance.",
+      "baseline_input": {
+        "patch": {
+          "dependency_change": {
+            "name": "serde",
+            "allowed": true
+          }
+        }
+      },
+      "mutated_input": {
+        "patch": {
+          "dependency_change": {
+            "name": "serde",
+            "allowed": false
+          }
+        }
+      },
+      "changed_paths": [
+        "/patch/dependency_change/allowed"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:PATCH_IMPACT_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "dependency_before",
+          "dependency_after"
+        ],
+        "ground_truth_reason": "The dependency change crosses the explicit allowlist boundary."
+      }
+    },
+    {
+      "id": "runtime-request-binding",
+      "drift_class": "runtime_drift",
+      "attack_type": "request_binding_mismatch",
+      "split": "train",
+      "description": "The request digest at dispatch no longer matches the decision-bound digest.",
+      "baseline_input": {
+        "runtime": {
+          "decision_request_digest": "aaaaaaaa",
+          "dispatch_request_digest": "aaaaaaaa"
+        }
+      },
+      "mutated_input": {
+        "runtime": {
+          "decision_request_digest": "aaaaaaaa",
+          "dispatch_request_digest": "bbbbbbbb"
+        }
+      },
+      "changed_paths": [
+        "/runtime/dispatch_request_digest"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:RUNTIME_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "request_digest",
+          "decision_hash"
+        ],
+        "ground_truth_reason": "Runtime dispatch must execute exactly the request that was evaluated."
+      }
+    },
+    {
+      "id": "policy-missing-ref",
+      "drift_class": "policy_drift",
+      "attack_type": "missing_reference",
+      "split": "test",
+      "description": "A decision loses the policy reference needed to audit its governing rules.",
+      "baseline_input": {
+        "policy": {
+          "policy_ref": "sha256:policy-aaaa",
+          "decision": "allow"
+        }
+      },
+      "mutated_input": {
+        "policy": {
+          "policy_ref": "",
+          "decision": "allow"
+        }
+      },
+      "changed_paths": [
+        "/policy/policy_ref"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "high:POLICY_DRIFT",
+        "decisions": [
+          "warn"
+        ],
+        "minimum_evidence": [
+          "policy_ref",
+          "decision_hash"
+        ],
+        "ground_truth_reason": "An unbound decision cannot prove which policy produced it."
+      }
+    },
+    {
+      "id": "test-claimed-not-observed",
+      "drift_class": "test_proof_drift",
+      "attack_type": "claimed_not_observed",
+      "split": "train",
+      "description": "A test result changes from observed execution to an unobserved claim.",
+      "baseline_input": {
+        "test_proof": {
+          "command": "cargo test",
+          "observed": true
+        }
+      },
+      "mutated_input": {
+        "test_proof": {
+          "command": "cargo test",
+          "observed": false
+        }
+      },
+      "changed_paths": [
+        "/test_proof/observed"
+      ],
+      "expected": {
+        "baseline_flagged": false,
+        "mutated_flagged": true,
+        "finding": "critical:TEST_PROOF_DRIFT",
+        "decisions": [
+          "block"
+        ],
+        "minimum_evidence": [
+          "test_command",
+          "execution_receipt"
+        ],
+        "ground_truth_reason": "A claimed result without observed execution is not valid test proof."
+      }
+    }
+  ]
+}
