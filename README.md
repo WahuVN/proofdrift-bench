@@ -1,5 +1,7 @@
 ﻿# ProofDrift Bench
 
+**English** | [Tiếng Việt](README.vi.md)
+
 [![Benchmark CI](https://github.com/WahuVN/proofdrift-bench/actions/workflows/ci.yml/badge.svg)](https://github.com/WahuVN/proofdrift-bench/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
