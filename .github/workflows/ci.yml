@@ -1,0 +1,33 @@
+﻿name: benchmark-ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify corpus invariants
+        run: python verify_corpus.py
+      - name: Format check
+        run: cargo fmt --all -- --check
+      - name: Strict lint
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Property and regression tests
+        run: cargo test --locked
+      - name: Reference benchmark
+        run: python run_benchmark.py > benchmark-result.json
+      - name: Upload benchmark result
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-result
+          path: benchmark-result.json
+          if-no-files-found: error

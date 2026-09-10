@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProofDrift adversarial fixture metadata",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "category",
+    "benign",
+    "input",
+    "expected",
+    "tags"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "benign": {
+      "type": "boolean"
+    },
+    "input": {
+      "type": "object"
+    },
+    "expected": {
+      "type": "object",
+      "required": [
+        "findings",
+        "decisions",
+        "minimum_evidence"
+      ],
+      "properties": {
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "minimum_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

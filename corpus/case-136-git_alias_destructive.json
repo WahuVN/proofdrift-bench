@@ -1,0 +1,39 @@
+{
+  "schema_version": "1",
+  "id": "case-136-git_alias_destructive",
+  "category": "git_alias_destructive",
+  "benign": false,
+  "input": {
+    "variant": 135,
+    "artifact": {
+      "name": "hardening-136",
+      "source": "synthetic"
+    },
+    "payload": {
+      "argv": [
+        "git",
+        "-c",
+        "alias.wipe=reset --hard",
+        "wipe"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:GIT_INDIRECT_MUTATION"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "argv_digest",
+      "git_config"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "git_alias_destructive"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "1",
+  "id": "case-156-test_claim_without_observation",
+  "category": "test_claim_without_observation",
+  "benign": false,
+  "input": {
+    "variant": 155,
+    "artifact": {
+      "name": "hardening-156",
+      "source": "synthetic"
+    },
+    "payload": {
+      "claimed": [
+        "db",
+        "auth"
+      ],
+      "observed": [
+        "auth"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:UNOBSERVED_TEST_CLAIM"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "claimed_tests",
+      "observed_tests"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "test_claim_without_observation"
+  ]
+}

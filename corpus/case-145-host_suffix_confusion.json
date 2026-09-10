@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-145-host_suffix_confusion",
+  "category": "host_suffix_confusion",
+  "benign": false,
+  "input": {
+    "variant": 144,
+    "artifact": {
+      "name": "hardening-145",
+      "source": "synthetic"
+    },
+    "payload": {
+      "allowed": "api.example.test",
+      "actual": "api.example.test.evil.invalid"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:EGRESS_HOST_CONFUSION"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "normalized_destination",
+      "matched_rule"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "host_suffix_confusion"
+  ]
+}

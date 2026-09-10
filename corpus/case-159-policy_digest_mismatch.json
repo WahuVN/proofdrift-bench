@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-159-policy_digest_mismatch",
+  "category": "policy_digest_mismatch",
+  "benign": false,
+  "input": {
+    "variant": 158,
+    "artifact": {
+      "name": "hardening-159",
+      "source": "synthetic"
+    },
+    "payload": {
+      "approved_bundle": "aa",
+      "dispatch_bundle": "bb"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:POLICY_BINDING_MISMATCH"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "policy_bundle_digest",
+      "decision_hash"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "policy_digest_mismatch"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "id": "case-003-unpinned_mcp",
+  "category": "unpinned_mcp",
+  "benign": false,
+  "input": {
+    "variant": 2,
+    "artifact": {
+      "name": "fixture-002",
+      "source": "local"
+    },
+    "payload": {
+      "package": "mcp-server@latest"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:UNPINNED_SOURCE"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "source_ref"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "unpinned_mcp"
+  ]
+}

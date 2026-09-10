@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-151-evidence_reorder",
+  "category": "evidence_reorder",
+  "benign": false,
+  "input": {
+    "variant": 150,
+    "artifact": {
+      "name": "hardening-151",
+      "source": "synthetic"
+    },
+    "payload": {
+      "sequence": [
+        1,
+        3,
+        2
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:EVIDENCE_CHAIN_REORDER"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "sequence",
+      "prev_event_hash"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "evidence_reorder"
+  ]
+}

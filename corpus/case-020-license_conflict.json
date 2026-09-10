@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "id": "case-020-license_conflict",
+  "category": "license_conflict",
+  "benign": false,
+  "input": {
+    "variant": 19,
+    "artifact": {
+      "name": "fixture-019",
+      "source": "local"
+    },
+    "payload": {
+      "declared": "MIT",
+      "detected": "AGPL-3.0"
+    }
+  },
+  "expected": {
+    "findings": [
+      "medium:LICENSE_CONTRADICTION"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "license_evidence"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "license_conflict"
+  ]
+}

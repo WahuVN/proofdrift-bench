@@ -1,0 +1,36 @@
+{
+  "schema_version": "1",
+  "id": "case-132-toctou_executable_swap",
+  "category": "toctou_executable_swap",
+  "benign": false,
+  "input": {
+    "variant": 131,
+    "artifact": {
+      "name": "hardening-132",
+      "source": "synthetic"
+    },
+    "payload": {
+      "program": "tool.exe",
+      "decision_digest": "aa",
+      "dispatch_digest": "bb"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:EXECUTABLE_IDENTITY_DRIFT"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "decision_binary_digest",
+      "dispatch_binary_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "toctou_executable_swap"
+  ]
+}

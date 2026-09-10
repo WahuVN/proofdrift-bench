@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-135-cmd_nested_shell",
+  "category": "cmd_nested_shell",
+  "benign": false,
+  "input": {
+    "variant": 134,
+    "artifact": {
+      "name": "hardening-135",
+      "source": "synthetic"
+    },
+    "payload": {
+      "argv": [
+        "cmd",
+        "/c",
+        "git clean -fdx"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:OPAQUE_NESTED_SHELL"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "argv_digest",
+      "shell_kind"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "cmd_nested_shell"
+  ]
+}

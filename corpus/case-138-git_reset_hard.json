@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-138-git_reset_hard",
+  "category": "git_reset_hard",
+  "benign": false,
+  "input": {
+    "variant": 137,
+    "artifact": {
+      "name": "hardening-138",
+      "source": "synthetic"
+    },
+    "payload": {
+      "argv": [
+        "git",
+        "reset",
+        "--hard",
+        "HEAD~1"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:GIT_DESTRUCTIVE"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "git_operation"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "git_reset_hard"
+  ]
+}

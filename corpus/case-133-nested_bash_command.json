@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-133-nested_bash_command",
+  "category": "nested_bash_command",
+  "benign": false,
+  "input": {
+    "variant": 132,
+    "artifact": {
+      "name": "hardening-133",
+      "source": "synthetic"
+    },
+    "payload": {
+      "argv": [
+        "bash",
+        "-c",
+        "git reset --hard HEAD~1"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:OPAQUE_NESTED_SHELL"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "argv_digest",
+      "shell_kind"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "nested_bash_command"
+  ]
+}

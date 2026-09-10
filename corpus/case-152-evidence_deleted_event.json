@@ -1,0 +1,37 @@
+{
+  "schema_version": "1",
+  "id": "case-152-evidence_deleted_event",
+  "category": "evidence_deleted_event",
+  "benign": false,
+  "input": {
+    "variant": 151,
+    "artifact": {
+      "name": "hardening-152",
+      "source": "synthetic"
+    },
+    "payload": {
+      "sequence": [
+        1,
+        3
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:EVIDENCE_CHAIN_GAP"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "sequence",
+      "prev_event_hash"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "evidence_deleted_event"
+  ]
+}

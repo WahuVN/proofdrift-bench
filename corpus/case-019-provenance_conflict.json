@@ -1,0 +1,34 @@
+{
+  "schema_version": "1",
+  "id": "case-019-provenance_conflict",
+  "category": "provenance_conflict",
+  "benign": false,
+  "input": {
+    "variant": 18,
+    "artifact": {
+      "name": "fixture-018",
+      "source": "local"
+    },
+    "payload": {
+      "declared_ref": "v1.0.0",
+      "resolved_revision": "deadbeef0012"
+    }
+  },
+  "expected": {
+    "findings": [
+      "medium:PROVENANCE_CONTRADICTION"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "source_uri",
+      "resolved_revision"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "provenance_conflict"
+  ]
+}

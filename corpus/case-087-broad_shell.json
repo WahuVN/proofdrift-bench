@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "id": "case-087-broad_shell",
+  "category": "broad_shell",
+  "benign": false,
+  "input": {
+    "variant": 86,
+    "artifact": {
+      "name": "fixture-086",
+      "source": "local"
+    },
+    "payload": {
+      "grant": "process.exec:*"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:CAPABILITY_OVERBROAD"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "capability"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "broad_shell"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1",
+  "id": "case-147-archive_bomb_limit",
+  "category": "archive_bomb_limit",
+  "benign": false,
+  "input": {
+    "variant": 146,
+    "artifact": {
+      "name": "hardening-147",
+      "source": "synthetic"
+    },
+    "payload": {
+      "compressed_bytes": 1024,
+      "expanded_bytes": 10737418240,
+      "limit_bytes": 104857600
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:ARCHIVE_RESOURCE_LIMIT"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "compressed_bytes",
+      "expanded_bytes",
+      "configured_limit"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "archive_bomb_limit"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "id": "case-024-unicode_bidi",
+  "category": "unicode_bidi",
+  "benign": false,
+  "input": {
+    "variant": 23,
+    "artifact": {
+      "name": "fixture-023",
+      "source": "local"
+    },
+    "payload": {
+      "text": "safe‮txt.exe"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:HIDDEN_UNICODE"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "byte_span",
+      "codepoint"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "unicode_bidi"
+  ]
+}

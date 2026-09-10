@@ -1,0 +1,36 @@
+{
+  "schema_version": "1",
+  "id": "case-129-approval_scope_mismatch",
+  "category": "approval_scope_mismatch",
+  "benign": false,
+  "input": {
+    "variant": 128,
+    "artifact": {
+      "name": "hardening-129",
+      "source": "synthetic"
+    },
+    "payload": {
+      "token": "synthetic-approval",
+      "approved_scope": "fs.read:a",
+      "requested_scope": "fs.write:b"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:APPROVAL_SCOPE_MISMATCH"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "approval_scope_digest",
+      "request_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "approval_scope_mismatch"
+  ]
+}

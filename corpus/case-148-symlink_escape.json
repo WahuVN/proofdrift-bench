@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-148-symlink_escape",
+  "category": "symlink_escape",
+  "benign": false,
+  "input": {
+    "variant": 147,
+    "artifact": {
+      "name": "hardening-148",
+      "source": "synthetic"
+    },
+    "payload": {
+      "lexical": "root/link/file",
+      "resolved": "outside/file"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:PATH_SYMLINK_ESCAPE"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "lexical_path",
+      "resolved_path"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "symlink_escape"
+  ]
+}

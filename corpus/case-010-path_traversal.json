@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "id": "case-010-path_traversal",
+  "category": "path_traversal",
+  "benign": false,
+  "input": {
+    "variant": 9,
+    "artifact": {
+      "name": "fixture-009",
+      "source": "local"
+    },
+    "payload": {
+      "path": "../../outside.txt"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:PATH_TRAVERSAL"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "normalized_path"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "path_traversal"
+  ]
+}

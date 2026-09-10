@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-146-unicode_hostname",
+  "category": "unicode_hostname",
+  "benign": false,
+  "input": {
+    "variant": 145,
+    "artifact": {
+      "name": "hardening-146",
+      "source": "synthetic"
+    },
+    "payload": {
+      "raw": "https://exаmple.test",
+      "note": "contains Cyrillic a"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:EGRESS_HOST_UNICODE"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "raw_destination",
+      "normalized_destination"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "unicode_hostname"
+  ]
+}

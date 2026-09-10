@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-134-powershell_encoded_command",
+  "category": "powershell_encoded_command",
+  "benign": false,
+  "input": {
+    "variant": 133,
+    "artifact": {
+      "name": "hardening-134",
+      "source": "synthetic"
+    },
+    "payload": {
+      "argv": [
+        "powershell",
+        "-EncodedCommand",
+        "R2l0IHB1c2ggLS1mb3JjZQ=="
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:OPAQUE_NESTED_SHELL"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "argv_digest",
+      "shell_kind"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "powershell_encoded_command"
+  ]
+}

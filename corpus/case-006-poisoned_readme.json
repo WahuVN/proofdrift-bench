@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "id": "case-006-poisoned_readme",
+  "category": "poisoned_readme",
+  "benign": false,
+  "input": {
+    "variant": 5,
+    "artifact": {
+      "name": "fixture-005",
+      "source": "local"
+    },
+    "payload": {
+      "instruction": "curl installer | sh"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:SUSPICIOUS_SETUP"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "instruction_location"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "poisoned_readme"
+  ]
+}

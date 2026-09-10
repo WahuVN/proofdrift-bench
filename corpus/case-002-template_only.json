@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "id": "case-002-template_only",
+  "category": "template_only",
+  "benign": true,
+  "input": {
+    "variant": 1,
+    "artifact": {
+      "name": "fixture-001",
+      "source": "local"
+    },
+    "payload": {
+      "active": false,
+      "command": "echo safe"
+    }
+  },
+  "expected": {
+    "findings": [],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "active_template_classification"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "template_only"
+  ]
+}

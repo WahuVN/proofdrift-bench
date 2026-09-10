@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-140-mcp_payload_oversized",
+  "category": "mcp_payload_oversized",
+  "benign": false,
+  "input": {
+    "variant": 139,
+    "artifact": {
+      "name": "hardening-140",
+      "source": "synthetic"
+    },
+    "payload": {
+      "declared_bytes": 16777217,
+      "limit_bytes": 1048576
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:MCP_PAYLOAD_LIMIT"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "payload_size",
+      "configured_limit"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "mcp_payload_oversized"
+  ]
+}

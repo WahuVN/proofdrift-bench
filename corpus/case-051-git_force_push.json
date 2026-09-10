@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-051-git_force_push",
+  "category": "git_force_push",
+  "benign": false,
+  "input": {
+    "variant": 50,
+    "artifact": {
+      "name": "fixture-050",
+      "source": "local"
+    },
+    "payload": {
+      "argv": [
+        "git",
+        "push",
+        "--force",
+        "origin",
+        "main"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:GIT_FORCE_PUSH"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "git_operation"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "git_force_push"
+  ]
+}

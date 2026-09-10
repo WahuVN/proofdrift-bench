@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-131-approval_concurrent_replay",
+  "category": "approval_concurrent_replay",
+  "benign": false,
+  "input": {
+    "variant": 130,
+    "artifact": {
+      "name": "hardening-131",
+      "source": "synthetic"
+    },
+    "payload": {
+      "approval_id": "apr-synth",
+      "parallel_consumers": 16
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:APPROVAL_REPLAY"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "approval_id",
+      "consume_count"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "approval_concurrent_replay"
+  ]
+}

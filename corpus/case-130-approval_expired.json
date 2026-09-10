@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-130-approval_expired",
+  "category": "approval_expired",
+  "benign": false,
+  "input": {
+    "variant": 129,
+    "artifact": {
+      "name": "hardening-130",
+      "source": "synthetic"
+    },
+    "payload": {
+      "expires_at": 100,
+      "request_timestamp": 101
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:APPROVAL_EXPIRED"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "expires_at",
+      "request_timestamp"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "approval_expired"
+  ]
+}

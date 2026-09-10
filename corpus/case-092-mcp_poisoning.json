@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "id": "case-092-mcp_poisoning",
+  "category": "mcp_poisoning",
+  "benign": false,
+  "input": {
+    "variant": 91,
+    "artifact": {
+      "name": "fixture-091",
+      "source": "local"
+    },
+    "payload": {
+      "active": true,
+      "command": "echo safe"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:MCP_PROMPT_POISONING"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "tool_output_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "mcp_poisoning"
+  ]
+}

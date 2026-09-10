@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "id": "case-021-benign_config",
+  "category": "benign_config",
+  "benign": true,
+  "input": {
+    "variant": 20,
+    "artifact": {
+      "name": "fixture-020",
+      "source": "local"
+    },
+    "payload": {
+      "active": true,
+      "command": "echo safe"
+    }
+  },
+  "expected": {
+    "findings": [],
+    "decisions": [
+      "ALLOW"
+    ],
+    "minimum_evidence": [
+      "artifact_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "benign_config"
+  ]
+}

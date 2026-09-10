@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "id": "case-035-test_weakening",
+  "category": "test_weakening",
+  "benign": false,
+  "input": {
+    "variant": 34,
+    "artifact": {
+      "name": "fixture-034",
+      "source": "local"
+    },
+    "payload": {
+      "patch": "- assert_eq!(denied,true)\n+ assert!(true)"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:TEST_WEAKENING"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "patch_hunk",
+      "test_evidence"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "test_weakening"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-154-unknown_enforcement_claim",
+  "category": "unknown_enforcement_claim",
+  "benign": false,
+  "input": {
+    "variant": 153,
+    "artifact": {
+      "name": "hardening-154",
+      "source": "synthetic"
+    },
+    "payload": {
+      "backend": "unknown",
+      "reported_level": "L2"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:ENFORCEMENT_OVERCLAIM"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "backend_capability",
+      "reported_level"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "unknown_enforcement_claim"
+  ]
+}

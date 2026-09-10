@@ -1,0 +1,34 @@
+{
+  "schema_version": "1",
+  "id": "case-034-tampered_receipt",
+  "category": "tampered_receipt",
+  "benign": false,
+  "input": {
+    "variant": 33,
+    "artifact": {
+      "name": "fixture-033",
+      "source": "local"
+    },
+    "payload": {
+      "expected": "0000000000000000000000000000000000000000000000000000000000000000",
+      "actual": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:EVIDENCE_TAMPER"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "expected_digest",
+      "actual_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "tampered_receipt"
+  ]
+}

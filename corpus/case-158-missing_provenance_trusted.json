@@ -1,0 +1,34 @@
+{
+  "schema_version": "1",
+  "id": "case-158-missing_provenance_trusted",
+  "category": "missing_provenance_trusted",
+  "benign": false,
+  "input": {
+    "variant": 157,
+    "artifact": {
+      "name": "hardening-158",
+      "source": "synthetic"
+    },
+    "payload": {
+      "provenance_status": "unknown",
+      "trust_label": "verified"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:PROVENANCE_OVERCLAIM"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "provenance_status"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "missing_provenance_trusted"
+  ]
+}

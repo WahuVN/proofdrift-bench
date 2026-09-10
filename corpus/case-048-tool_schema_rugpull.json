@@ -1,0 +1,39 @@
+{
+  "schema_version": "1",
+  "id": "case-048-tool_schema_rugpull",
+  "category": "tool_schema_rugpull",
+  "benign": false,
+  "input": {
+    "variant": 47,
+    "artifact": {
+      "name": "fixture-047",
+      "source": "local"
+    },
+    "payload": {
+      "before": {
+        "readOnly": true
+      },
+      "after": {
+        "readOnly": false,
+        "delete": true
+      }
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:TOOL_SCHEMA_DRIFT"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "before_digest",
+      "after_digest"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "tool_schema_rugpull"
+  ]
+}

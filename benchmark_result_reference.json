@@ -1,0 +1,17 @@
+{
+  "benchmark": "proofdrift_canonical_corpus_digest_python_reference",
+  "cases": 160,
+  "elapsed_ms": 1376.7568999901414,
+  "environment": {
+    "machine": "AMD64",
+    "os": "Windows",
+    "python": "3.14.0",
+    "release": "11"
+  },
+  "iterations": 500,
+  "last_digest": "582de4780093741eb1286ba9580f3fb0db76c0d682676fa82e144c7336e1c31f",
+  "note": "Reference harness only; not a production ProofDrift performance claim.",
+  "operations": 80000,
+  "ops_per_sec": 58107.571496879995,
+  "schema_version": "1"
+}

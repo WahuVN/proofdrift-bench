@@ -1,0 +1,37 @@
+{
+  "schema_version": "1",
+  "id": "case-150-case_normalization_collision",
+  "category": "case_normalization_collision",
+  "benign": false,
+  "input": {
+    "variant": 149,
+    "artifact": {
+      "name": "hardening-150",
+      "source": "synthetic"
+    },
+    "payload": {
+      "paths": [
+        "Root/Auth.rs",
+        "root/auth.rs"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:PATH_CASE_COLLISION"
+    ],
+    "decisions": [
+      "REQUIRE_APPROVAL"
+    ],
+    "minimum_evidence": [
+      "raw_path",
+      "canonical_path"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "case_normalization_collision"
+  ]
+}

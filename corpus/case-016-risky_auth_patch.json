@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-016-risky_auth_patch",
+  "category": "risky_auth_patch",
+  "benign": false,
+  "input": {
+    "variant": 15,
+    "artifact": {
+      "name": "fixture-015",
+      "source": "local"
+    },
+    "payload": {
+      "changed_files": [
+        "src/risky_auth_patch.rs"
+      ],
+      "observed_tests": [
+        "unit::unrelated"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:SENSITIVE_PATCH_AUTH"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "changed_files",
+      "test_evidence"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "risky_auth_patch"
+  ]
+}

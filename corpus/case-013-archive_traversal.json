@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "id": "case-013-archive_traversal",
+  "category": "archive_traversal",
+  "benign": false,
+  "input": {
+    "variant": 12,
+    "artifact": {
+      "name": "fixture-012",
+      "source": "local"
+    },
+    "payload": {
+      "entry": "../escape/owned.txt",
+      "expanded_bytes": 10485760
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:ARCHIVE_TRAVERSAL"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "archive_entry"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "archive_traversal"
+  ]
+}

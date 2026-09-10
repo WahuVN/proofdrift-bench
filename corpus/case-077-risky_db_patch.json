@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-077-risky_db_patch",
+  "category": "risky_db_patch",
+  "benign": false,
+  "input": {
+    "variant": 76,
+    "artifact": {
+      "name": "fixture-076",
+      "source": "local"
+    },
+    "payload": {
+      "changed_files": [
+        "src/risky_db_patch.rs"
+      ],
+      "observed_tests": [
+        "unit::unrelated"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:SENSITIVE_PATCH_DB"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "changed_files",
+      "test_evidence"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "risky_db_patch"
+  ]
+}

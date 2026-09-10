@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-155-passive_discovery_exec",
+  "category": "passive_discovery_exec",
+  "benign": false,
+  "input": {
+    "variant": 154,
+    "artifact": {
+      "name": "hardening-155",
+      "source": "synthetic"
+    },
+    "payload": {
+      "scan_mode": "passive",
+      "process_launch_count": 1
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:PASSIVE_DISCOVERY_EXEC"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "process_launch_count",
+      "scan_mode"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "passive_discovery_exec"
+  ]
+}

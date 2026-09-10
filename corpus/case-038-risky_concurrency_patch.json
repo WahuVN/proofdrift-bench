@@ -1,0 +1,38 @@
+{
+  "schema_version": "1",
+  "id": "case-038-risky_concurrency_patch",
+  "category": "risky_concurrency_patch",
+  "benign": false,
+  "input": {
+    "variant": 37,
+    "artifact": {
+      "name": "fixture-037",
+      "source": "local"
+    },
+    "payload": {
+      "changed_files": [
+        "src/risky_concurrency_patch.rs"
+      ],
+      "observed_tests": [
+        "unit::unrelated"
+      ]
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:SENSITIVE_PATCH_CONCURRENCY"
+    ],
+    "decisions": [
+      "OBSERVE"
+    ],
+    "minimum_evidence": [
+      "changed_files",
+      "test_evidence"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "risky_concurrency_patch"
+  ]
+}

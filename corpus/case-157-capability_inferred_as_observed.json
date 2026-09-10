@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-157-capability_inferred_as_observed",
+  "category": "capability_inferred_as_observed",
+  "benign": false,
+  "input": {
+    "variant": 156,
+    "artifact": {
+      "name": "hardening-157",
+      "source": "synthetic"
+    },
+    "payload": {
+      "capability_source": "inferred",
+      "reported_as": "observed"
+    }
+  },
+  "expected": {
+    "findings": [
+      "high:EVIDENCE_KIND_MISMATCH"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "capability_source",
+      "evidence_kind"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "capability_inferred_as_observed"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "id": "case-149-junction_escape",
+  "category": "junction_escape",
+  "benign": false,
+  "input": {
+    "variant": 148,
+    "artifact": {
+      "name": "hardening-149",
+      "source": "synthetic"
+    },
+    "payload": {
+      "lexical": "root/junction/file",
+      "resolved": "D:/outside/file"
+    }
+  },
+  "expected": {
+    "findings": [
+      "critical:PATH_JUNCTION_ESCAPE"
+    ],
+    "decisions": [
+      "DENY"
+    ],
+    "minimum_evidence": [
+      "lexical_path",
+      "resolved_path"
+    ]
+  },
+  "tags": [
+    "golden",
+    "security-corpus",
+    "hardening",
+    "junction_escape"
+  ]
+}
